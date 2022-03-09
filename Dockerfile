@@ -5,13 +5,13 @@ USER root
 ENV DEBIAN_FRONTEND noninteractive
 
 
-# install libraries required to gTTS to process TTS
+# install libraries required to pyDes to process 3DES
 RUN apt-get -y update \
     && apt-get -y install apt-utils \
     && apt-get install -y build-essential unzip pkg-config wget \
     && apt-get install -y python3-pip   
 
-# use pip3 (the python zpm) to install gTTS dependencies
+# use pip3 (the python zpm) to install 3DES dependencies
 RUN pip3 install --upgrade pip setuptools wheel
 RUN pip3 install --target /usr/irissys/mgr/python pyDes
 

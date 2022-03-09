@@ -28,28 +28,6 @@ XData UrlMap [ XMLNamespace = "http://www.intersystems.com/urlmap" ]
 </Routes>
 }
 
-// Generate audio file from text
-
-/// General information
-ClassMethod GetInfo() As %Status
-{
-  SET version = ..#Version
-  SET fmt=##class(%SYS.NLS.Format).%New("ptbw")
-  
-  SET info = {
-    "Service": "3DES Service API",
-    "version": (version),
-    "Developer": "Yuri Gomes",
-    "Status": "Ok",
-    "Date": ($ZDATETIME($HOROLOG))
-  }
-  Set %response.ContentType = ..#CONTENTTYPEJSON
-  Set %response.Headers("Access-Control-Allow-Origin")="*"
-
-  Write info.%ToJSON()
-  Quit $$$OK
-}
-
 /// Encrypt message
 ClassMethod EncryptMessage() As %Status
 {
@@ -69,6 +47,7 @@ ClassMethod EncryptMessage() As %Status
   }
 }
 
+/// Decrypt messages
 ClassMethod DecryptMessage() As %Status
 {
   Try {
@@ -85,6 +64,26 @@ ClassMethod DecryptMessage() As %Status
           !, "Additional data: ", ?20, err.Data, !
     Return $$$NOTOK
   }
+}
+
+/// General information
+ClassMethod GetInfo() As %Status
+{
+  SET version = ..#Version
+  SET fmt=##class(%SYS.NLS.Format).%New("ptbw")
+  
+  SET info = {
+    "Service": "3DES Service API",
+    "version": (version),
+    "Developer": "Yuri Gomes",
+    "Status": "Ok",
+    "Date": ($ZDATETIME($HOROLOG))
+  }
+  Set %response.ContentType = ..#CONTENTTYPEJSON
+  Set %response.Headers("Access-Control-Allow-Origin")="*"
+
+  Write info.%ToJSON()
+  Quit $$$OK
 }
 
 ClassMethod SwaggerSpec() As %Status
